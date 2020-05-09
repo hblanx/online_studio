@@ -1,0 +1,57 @@
+import urllib.request as r
+import json
+import turtle
+cs=input("您要查询的城市是：（输入拼音）")
+url="http://api.openweathermap.org/data/2.5/forecast?q="+cs+",cn&mode=json&lang=zh_cn&&APPID=6a67ed641c0fda8b69715c43518b6996&units=metric"
+data=r.urlopen(url).read().decode("utf-8")
+
+data=json.loads(data)
+zxt = turtle.Screen()
+zxt.setup(600, 600)
+zxt.title("未来七段时间数据")
+pen = turtle.Turtle()
+pen.hideturtle()
+pen.speed(0)
+pen.pensize(5)
+pen.up()
+x=-225
+y=250
+pen.setpos(x,y)
+pen.pencolor("red")
+pen.up()
+#pen.circle(100)
+for a in range(0,7):#未来七段时间数据
+    t=data["list"][a]["main"]["temp"]#拿到温度
+    y=400*(t-24)/9-150
+    pen.goto(x,y)
+    pen.pendown()
+    x+=75 
+pen.up()
+x=-225
+pen.goto(x,-180)
+for a in range(0,7):
+    sj=data["list"][a]["dt_txt"][-8:-3]#拿到时间
+    pen.write(sj,font =(" Arial",16," normal"))
+    x+=75
+    pen.goto(x,-180)
+#绘制表格
+pen.up()
+pen.goto(-240,250)
+pen.down()
+pen.goto(-240,-150)
+pen.goto(240,-150)
+pen.up()
+y=-150
+b=24
+pen.goto(-270,y)
+for a in range(10):
+    pen.write(b,font =(" Arial",16," normal"))
+    b+=1
+    y+=44
+    pen.goto(-270,y)
+pen.goto(-250,-220)
+pen.pencolor("blue")
+pen.write(cs+"的七段时间温度折线图",font =("黑体",28," normal"))
+
+#pen.circle(10)
+zxt.mainloop()
