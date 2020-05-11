@@ -1,0 +1,81 @@
+import urllib.request as r
+
+import json
+
+import turtle
+
+from xpinyin import Pinyin
+
+py=Pinyin()
+cs=input("您要查询的城市是：(汉字)")
+cspy=py.get_pinyin(cs,"")
+
+url="http://api.openweathermap.org/data/2.5/forecast?q="+cspy+",cn&mode=json&lang=zh_cn&&APPID=6a67ed641c0fda8b69715c43518b6996&units=metric"
+data=r.urlopen(url).read().decode("utf-8")
+
+data=json.loads(data)
+zxt = turtle.Screen()
+zxt.setup(600, 600)
+zxt.title("天气预报")
+pen = turtle.Turtle()
+pen.hideturtle()
+pen.speed(0)
+pen.pensize(5)
+pen.up()
+
+pen2 = turtle.Turtle()
+pen2.hideturtle()
+pen2.speed(0)
+pen2.pensize(5)
+pen2.up()
+pen.pencolor("red")
+
+def get_time(a):
+    b=data["list"][a]["dt_txt"][-8:-6]
+    return b
+
+def get_day(a):
+    b=data["list"][a]["dt_txt"][8:11]
+    return b
+
+def get_tump(a):
+    b=data["list"][a]["main"]["temp"]
+    return b
+
+
+x=-222
+pen.up()
+for a in range(0,40):
+    sj=get_time(a) # 拿到小时时间
+    if(sj == "18"):
+        sj_t=get_day(a) # 拿到天时间
+        #pen2用来写字
+        pen2.goto(x,-180)
+        pen2.write("%s号"%(sj_t),font =(" Arial",20," normal"))
+
+        t=get_tump(a) # 拿到温度
+        y=400*(t-24)/9-150
+        pen.goto(x,y)
+        pen.down()
+        x+=92
+# 绘制表格。
+pen.up()
+pen.goto(-240,250)
+pen.down()
+pen.goto(-240,-150)
+pen.goto(240,-150)
+pen.up()
+y=-150
+b=24
+pen.goto(-270,y)
+pen.pencolor("black")
+for a in range(10):
+    pen.write(b,font =(" Arial",16," normal"))
+    b+=1
+    y+=44
+    pen.goto(-270,y)
+pen.goto(-250,-220)
+pen.pencolor("blue")
+pen.write(cs+"的未来五天温度折线图",font =("黑体",28," normal"))
+
+zxt.mainloop()
