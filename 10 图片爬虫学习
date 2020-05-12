@@ -1,0 +1,24 @@
+import requests
+
+import re
+
+import os
+
+# 请求网站
+response = requests.get("https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=result&fr=&sf=1&fmq=1589266077468_R&pv=&ic=&nc=1&z=&hd=&latest=&copyright=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&sid=&word=%E5%85%94%E5%AD%90")
+html = response.text
+
+# 解析网页
+urls=re.findall('"thumbURL":"(.*?)","replaceUrl": ',html)
+print(urls)
+if not os.path.exists("学习"):
+    os.mkdir("学习")
+
+# 保存目标
+a=0
+for url in urls:
+    file_name = "图片"+str(a)+".jpg"
+    a+=1
+    response = requests.get(url)
+    with open("学习/"+file_name,"wb")as f:
+        f.write(response.content)
