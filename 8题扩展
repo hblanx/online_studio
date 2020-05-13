@@ -1,0 +1,26 @@
+import urllib.request as r
+import json
+from xpinyin import Pinyin
+
+py=Pinyin()
+cs=input("您要查询的城市是：(汉字)")
+cspy=py.get_pinyin(cs,"")
+
+url="http://api.openweathermap.org/data/2.5/forecast?q="+cspy+",cn&mode=json&lang=zh_cn&&APPID=6a67ed641c0fda8b69715c43518b6996&units=metric"
+data=r.urlopen(url).read().decode("utf-8")
+data=json.loads(data)
+
+hot=[]
+for a in range(0,40):
+    sj=data["list"][a]["dt_txt"][-8:-6]#拿到小时时间
+    if(sj=="12"):
+        hot.append(data["list"][a]["main"]["temp"])
+print("="*25)
+print("未来5天%s12点气温排行"%(cs))
+print("="*25)
+hot2=sorted(hot)
+for a in range(5):
+    print("+"*int(hot2[a]-12),end="")
+    print(hot2[a],end="")
+    print(" "*(31-int(hot2[a]))+"=")
+print("="*25)
