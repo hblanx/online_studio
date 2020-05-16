@@ -1,0 +1,17 @@
+import urllib.request as r
+import re
+from xpinyin import Pinyin
+
+
+f=open("temp.txt","w+",encoding="utf-8")
+py=Pinyin()
+cs_list=["河北","山西","深圳","吉林","黑龙江","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","海南","四川","贵州","珠海","陕西","甘肃","青海"]
+for cs in cs_list:
+    cspy=py.get_pinyin(cs,"")
+    url="http://api.openweathermap.org/data/2.5/weather?q="+cspy+"&mode=json&units=metric&lang=zh_cn&APPID=6a67ed641c0fda8b69715c43518b6996"
+    data=r.urlopen(url).read().decode("utf-8") 
+    #拿到温度
+    t=re.findall('"temp":(.*?),',data)
+    print(cs+" "+t[0])
+    f.write(cs+" "+t[0]+"\n")
+f.close()
