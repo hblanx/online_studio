@@ -1,0 +1,26 @@
+import requests
+
+import re
+
+import os
+
+headers={
+    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"
+    }
+if not os.path.exists("图片"):
+    os.mkdir("图片")
+
+#for n in range(2756,3445):
+for n in range(3443,3445):
+    url="https://www.doutula.com/photo/list/?page=%d"%(n)
+    response = requests.get(url,headers=headers)
+    html = response.text
+    urls=re.findall('data-original="(.*?)"',html)
+
+a=0
+for url in urls:
+    file_name = "图片"+str(a)+".jpg"
+    a+=1
+    response = requests.get(url)
+    with open("图片/"+file_name,"wb")as f:
+        f.write(response.content)
