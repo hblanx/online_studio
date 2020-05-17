@@ -14,7 +14,7 @@ for bl2 in range(1,int(number)+1):
     t=etree.HTML(html)
     story=t.xpath('//div[@class="content"]/span/text()')
     long=len(story)
-    for bl in range(long):
+    for bl in range(long):#这里其实用for bl in story更快
         story[bl]=story[bl].replace("\n","")
         story[bl]=story[bl].replace("\u3000","")
         story[bl]=story[bl].replace("\u200b","")
