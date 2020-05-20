@@ -28,7 +28,7 @@ for n in range(1,2):#目录页数（别太大）
         c_attribute=c_attribute.replace(" ","")#去掉奇怪的东西
         all_list[0].append(c_number)#添加到列表
         try:
-            c_attribute_a=c_attribute.split("|",)
+            c_attribute_a=c_attribute.split("|",2)
             all_list[1].append(" "+c_attribute_a[0])
             all_list[2].append(" "+c_attribute_a[1])
             all_list[3].append(" "+c_attribute_a[2])
