@@ -9,7 +9,7 @@ from lxml import etree
 headers={
     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"
     }
-all_list=[[],[]]
+all_list=[[],[],[],[]]
 error_list=[]
 for n in range(1,2):#目录页数（别太大）
     url="https://company.51job.com/p{}/".format(str(n))
@@ -22,11 +22,18 @@ for n in range(1,2):#目录页数（别太大）
         html_before=response.content
         html=str(html_before,'gbk')
         t=etree.HTML(html)
-        all_list[0].append(str(n))#添加公司序号
+        c_number=t.xpath('//*[@id="hidCOID"]/@value')[0]#添加公司序号
         c_id=t.xpath("/html/body/div[2]/div[2]/div[2]/div/h1/@title")[0]#公司中文名
         c_attribute=t.xpath("/html/body/div[2]/div[2]/div[2]/div/p[1]/@title")[0]#公司属性
-        c_attribute=c_attribute.replace(" ","")
-        all_list[1].append(c_id+" "+c_attribute)#添加到列表
+        c_attribute=c_attribute.replace(" ","")#去掉奇怪的东西
+        all_list[0].append(c_number)#添加到列表
+        try:
+            c_attribute_a=c_attribute.split("|",)
+            all_list[1].append(" "+c_attribute_a[0])
+            all_list[2].append(" "+c_attribute_a[1])
+            all_list[3].append(" "+c_attribute_a[2])
+        except Exception as out_of_range:
+            error_list.append(c_number)
 complete=json.dumps(all_list)#转换到json
 complete=complete.encode()
 #保存
