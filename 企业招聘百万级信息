@@ -19,10 +19,9 @@ for n in range(1,5):#公司代码（别太大）
     c_id=t.xpath("/html/body/div[2]/div[2]/div[2]/div/h1/@title")[0]#公司中文名
     c_attribute=t.xpath("/html/body/div[2]/div[2]/div[2]/div/p[1]/@title")[0]#公司属性
     all_list[1].append(c_id+" "+c_attribute)#添加到列表
-complete=json(all_list)#转换到json
-
+complete=json.dumps(all_list)#转换到json
+complete= complete.encode()
 #保存
+a=0
 with open("下载.txt","wb")as f:
-    for a in all_list
-
-        f.write(response.content)
+    f.write(complete)
