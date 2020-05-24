@@ -1,5 +1,9 @@
 from tkinter import *
+import urllib.request as r
+import json
+from xpinyin import Pinyin
 
+py=Pinyin()
 root = Tk()
 root.title("温度查询")
 Label(root, text="城市中文:").grid(row=0)
@@ -8,11 +12,14 @@ e1.grid(row=0, column=1, padx=10, pady=5)
 
 def show():    
     cs=e1.get()
-    
-    messagebox.showinfo('温度',cs)
+    cspy=py.get_pinyin(cs,"")
+    url="http://api.openweathermap.org/data/2.5/weather?q="+cspy+"&mode=json&units=metric&lang=zh_cn&APPID=6a67ed641c0fda8b69715c43518b6996"
+    data=r.urlopen(url).read().decode("utf-8")
+    data=json.loads(data)
+    temp=data["main"]["temp"]
+    messagebox.showinfo('温度',"现在:"+str(temp)[0:2]+"度")
     e1.delete(0, END)
 
 Button(root, text="获取信息", width=10, command=show).grid(row=3, column=0, sticky=W, padx=10, pady=5)
-
 
 mainloop()
