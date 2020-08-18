@@ -1,0 +1,18 @@
+package emm;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class hellojava {
+	public static void main(String[] args) {
+        Map weather = new HashMap();
+        weather.put("temp",new String[]{"36","35","37","36.5","35","38.1","38"});
+        weather.put("type",new String[]{"晴","雨","阴","云","雨","晴","晴"});
+        String[] temps=(String[])weather.get("temp");
+        String[] types=(String[])weather.get("type");
+        for(int i=0;i<=6;i++) {
+        	System.out.println(temps[i]+types[i]);
+        }
+        System.out.print("最高温度38.1");
+	}
+}
