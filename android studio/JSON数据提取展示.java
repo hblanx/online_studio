@@ -4,24 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class MainActivity extends AppCompatActivity {
+public class jsonActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_json);
     }
 
     public void get(View view) throws JSONException {
@@ -32,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         String dm_title=item0.getString("dm_title");
         String dm_budget=item0.getString("dm_budget");
         String dm_cycle=item0.getString("dm_cycle");
-        String dm_type=item0.getString("dm_type");
+        JSONArray dm_type=item0.getJSONArray("dm_type");
+        String strdm_type = dm_type.getString(0);
         //补充view
         TextView Vdm_title = (TextView)findViewById(R.id.dm_title);
         TextView Vdm_budget = (TextView)findViewById(R.id.dm_budget);
@@ -42,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         Vdm_cycle.setText(dm_cycle);
         TextView Vdm_type = (TextView)findViewById(R.id.dm_type);
         TextView Vdm_type2 = (TextView)findViewById(R.id.dm_type2);
-        Vdm_type.setText(dm_type);
-        Vdm_type2.setText(dm_type);
+        Vdm_type.setText(strdm_type);
+        Vdm_type2.setText(strdm_type);
         Toast.makeText(this,"run", Toast.LENGTH_SHORT).show();
     }
 }
