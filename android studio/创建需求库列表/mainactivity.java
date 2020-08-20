@@ -37,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
             View itemView = View.inflate(MainActivity.this, R.layout.lv_item,null);
             projItem projlist=datalist.get(position);
             ((TextView)itemView.findViewById(R.id.proj_title)).setText((projlist.proj_title));
-            ((TextView)itemView.findViewById(R.id.proj_chatCount)).setText((projlist.proj_chatCount));
-            ((TextView)itemView.findViewById(R.id.proj_price)).setText((projlist.proj_price));
+            String strChatCount = String.valueOf(projlist.proj_chatCount);
+            ((TextView)itemView.findViewById(R.id.proj_chatCount)).setText((strChatCount));
+            String strPrice = String.valueOf(projlist.proj_price);
+            ((TextView)itemView.findViewById(R.id.proj_price)).setText(strPrice);
             ((TextView)itemView.findViewById(R.id.proj_desc)).setText((projlist.proj_desc));
             return itemView;
         }
@@ -51,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         projItem proj = new projItem();
         proj.proj_title="火车票x";
         proj.proj_desc="详情";
-        proj.proj_price="1";
-        proj.proj_chatCount="20";
+        proj.proj_price=1;
+        proj.proj_chatCount=20;
         datalist.add(proj);
         Lv.setAdapter(baseAdapter);
 
@@ -62,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         projItem proj = new projItem();
         proj.proj_title="火车票x";
         proj.proj_desc="详情";
-        proj.proj_price="1";
-        proj.proj_chatCount="20";
+        proj.proj_price=1;
+        proj.proj_chatCount=20;
         datalist.add(proj);
         baseAdapter.notifyDataSetChanged();
     }
