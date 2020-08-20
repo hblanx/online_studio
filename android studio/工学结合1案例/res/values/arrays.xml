@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="needType">
+        <item>移动应用</item>
+        <item>H5应用</item>
+        <item>微信应用</item>
+        <item>企业应用</item>
+        <item>WEB应用</item>
+        <item>工具应用</item>
+        <item>桌面应用</item>
+        <item>嵌入式应用</item>
+    </string-array>
+    <string-array name="needTime">
+        <item>待商议</item>
+        <item>1个月</item>
+        <item>2个月</item>
+    </string-array>
+    <string-array name="needMoney">
+        <item>待商议</item>
+        <item>1万</item>
+        <item>2万</item>
+    </string-array>
+</resources>
